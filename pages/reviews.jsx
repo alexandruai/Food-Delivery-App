@@ -38,7 +38,6 @@ const Reviews = () => {
       </main>
 
       <footer>
-        {/* Add footer content if needed */}
       </footer>
 
       <style jsx>{`
