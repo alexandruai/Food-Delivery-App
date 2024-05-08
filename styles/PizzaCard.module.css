@@ -1,42 +1,52 @@
 .container {
-    width: 22%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 40px;
-    cursor: pointer;
+  width: 100%; /* Adjust width to fill the table cell */
+  padding: 10px; /* Adjust padding as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #d1411e;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666;
+}
+
+.desc {
+  text-align: center;
+  color: #777;
+}
+
+.imageContainer {
+  width: 100%; /* Set a width to fill the container */
+  height: 200px; /* Set a fixed height */
+  position: relative; /* Position the container relative for absolute positioning of the image */
+  display: flex; /* Apply flexbox */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  text-align: center; /* Center content horizontally within container */
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 20px; /* Adjust padding as needed */
   }
-  
+
   .title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #d1411e;
+    font-size: 30px;
   }
-  
-  .price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #666;
-  }
-  
+
+  .price,
   .desc {
-    text-align: center;
-    color: #777;
+    font-size: 24px;
   }
-  
-  @media screen and (max-width: 480px) {
-    .container {
-      width: 100%;
-    }
-  
-    .title {
-      font-size: 30px;
-    }
-  
-    .price,
-    .desc {
-      font-size: 24px;
-    }
-  }
+}

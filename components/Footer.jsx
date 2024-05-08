@@ -16,22 +16,22 @@ const Footer = () => {
         <div className={styles.card}>
           <h1 className={styles.title}>FIND OUR RESTAURANTS</h1>
           <p className={styles.text}>
-            1654 R. Don Road #304.
+            Stravopol 5 Street.
             <br /> Bucharest, 85022
             <br /> (602) 867-1010
           </p>
           <p className={styles.text}>
-            2356 K. Laquie Rd #235.
+            Calea Vitan 23.
             <br /> Bucharest, 85022
             <br /> (602) 867-1011
           </p>
           <p className={styles.text}>
-            1614 E. Erwin St #104.
+            Calea Victoriei 33.
             <br /> Bucharest, 85022
             <br /> (602) 867-1012
           </p>
           <p className={styles.text}>
-            1614 W. Caroll St #125.
+            Bucurestii Noi 777.
             <br /> Bucharest, 85022
             <br /> (602) 867-1013
           </p>

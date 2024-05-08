@@ -18,6 +18,16 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  .cardWrapper {
+    flex: 1 0 25%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .clearfix {
+    clear: both;
+  }
   
   @media screen and (max-width: 480px) {
     .title {
@@ -28,4 +38,29 @@
       width: 90%;
       text-align: center;
     }
+  }
+
+  .tableContainer {
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #dddddd;
+    padding: 16px; /* Increase padding to make cells larger */
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  .table td img {
+    max-width: 100%; /* Ensure images fit within their cells */
+    height: auto; /* Maintain aspect ratio */
   }
