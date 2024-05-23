@@ -147,7 +147,7 @@ const Cart = () => {
                     className={styles.deleteButton}
                     onClick={() => handleDelete(product._id)}
                   >
-                    Delete
+                    Remove Product
                   </button>
                 </td>
               </tr>
