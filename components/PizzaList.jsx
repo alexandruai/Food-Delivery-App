@@ -4,7 +4,7 @@ import PizzaCard from "./PizzaCard";
 const PizzaList = ({ pizzaList }) => {
 
   if (!Array.isArray(pizzaList)) {
-    return <div>No pizzas available</div>;
+    return <div>Nu avem produse disponibile</div>;
   }
 
   const chunkArray = (arr, size) => {
@@ -35,21 +35,18 @@ const PizzaList = ({ pizzaList }) => {
     // </div>
 
     <div className={styles.container}>
-      <h1 className={styles.title}>THE BEST PIZZA IN TOWN</h1>
-      <p className={styles.desc}>
-        Satisfy your cravings with just a click.
-        Delicious food, delivered to your doorstep.
-        Indulge in delectable flavors, delivered straight to your door.
-      </p>
+      <br />
+      <h1 className={styles.title}>CEA MAI BUNA MANCARE DIN ORAS</h1>
+
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
-            <tr>
+            {/* <tr>
               <th>Image</th>
               <th>Name</th>
               <th>Description</th>
               <th>Price</th>
-            </tr>
+            </tr> */}
           </thead>
           <tbody>
             {pizzaChunks.map((chunk, index) => (
@@ -67,6 +64,7 @@ const PizzaList = ({ pizzaList }) => {
             ))}
           </tbody>
         </table>
+        <br />
       </div>
     </div>
   );

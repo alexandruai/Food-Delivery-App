@@ -1,20 +1,30 @@
 import { useState } from "react";
+import Link from "next/link";
 import styles from "../styles/OrderDetail.module.css";
+
 
 const OrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
   const [address, setAddress] = useState("");
 
   const handleClick = () => {
+    if (total <= 50) {
+      total += 5;  // Adăugăm 5 lei la total pentru livrare
+    }
     createOrder({ customer, address, total, method: 0 });
+    setClose(true);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h1 className={styles.title}>You will pay $12 after delivery.</h1>
+        {total <= 50 ? (
+          <h1 className={styles.title}>Livrare standard 5 lei</h1>
+        ) : (
+          <h1 className={styles.title}>Livrare gratuită</h1>
+        )}
         <div className={styles.item}>
-          <label className={styles.label}>Name Surname</label>
+          <label className={styles.label}>Nume Prenume</label>
           <input
             placeholder="John Doe"
             type="text"
@@ -23,26 +33,33 @@ const OrderDetail = ({ total, createOrder }) => {
           />
         </div>
         <div className={styles.item}>
-          <label className={styles.label}>Phone Number</label>
+          <label className={styles.label}>Numar Telefon</label>
           <input
             type="text"
-            placeholder="+1 234 567 89"
+            placeholder="+40 770 777 777"
             className={styles.input}
           />
         </div>
         <div className={styles.item}>
-          <label className={styles.label}>Address</label>
+          <label className={styles.label}>Adresa</label>
           <textarea
             rows={5}
-            placeholder="Elton St. 505 NY"
+            placeholder="Strada Sperantei 777"
             type="text"
             className={styles.textarea}
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
+        <br/>
         <button className={styles.button} onClick={handleClick}>
-          Order
+          Comanda
         </button>
+        <p>
+          <br />
+          <Link href="/products" passHref>
+              Ma Mai Gandesc
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -24,14 +24,14 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <h1>Admin Dashboard</h1>
+        <h1>Panou Administrator</h1>
         <input
           placeholder="username"
           className={styles.input}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          placeholder="password"
+          placeholder="parola"
           type="password"
           className={styles.input}
           onChange={(e) => setPassword(e.target.value)}
@@ -39,7 +39,7 @@ const Login = () => {
         <button onClick={handleClick} className={styles.button}>
           Sign In
         </button>
-        {error && <span className={styles.error}>Wrong Credentials!</span>}
+        {error && <span className={styles.error}>Credentiale Gresite!</span>}
       </div>
     </div>
   );

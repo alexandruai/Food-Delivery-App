@@ -99,11 +99,11 @@ const Cart = () => {
         <table className={styles.table}>
           <tbody>
             <tr className={styles.trTitle}>
-              <th>Product</th>
-              <th>Name</th>
-              <th>Extras</th>
-              <th>Price</th>
-              <th>Quantity</th>
+              <th>Produs</th>
+              <th>Nume Produs</th>
+              <th>Extra Topping</th>
+              <th>Pret</th>
+              <th>Cantitate</th>
               <th>Total</th>
               <th />
             </tr>
@@ -126,28 +126,32 @@ const Cart = () => {
                 </td>
                 <td>
                   <span className={styles.extras}>
-                    {product.extras.map((extra) => (
-                      <span key={extra._id}>{extra.text}, </span>
-                    ))}
+                    {product.extras.length === 0 ? (
+                      <span> Nu s-au adaugat extra toppinguri</span>
+                    ) : (
+                      product.extras.map((extra) => (
+                        <span key={extra._id}>{extra.text} </span>
+                      ))
+                    )}
                   </span>
                 </td>
                 <td>
-                  <span className={styles.price}>${product.price}</span>
+                  <span className={styles.price}>{product.price} Lei</span>
                 </td>
                 <td>
                   <span className={styles.quantity}>{product.quantity}</span>
                 </td>
                 <td>
                   <span className={styles.total}>
-                    ${product.price * product.quantity}
+                    {product.price * product.quantity} Lei
                   </span>
                 </td>
                 <td>
                   <button
-                    className={styles.deleteButton}
+                    className={styles.button}
                     onClick={() => handleDelete(product._id)}
                   >
-                    Remove Product
+                    Sterge Produs
                   </button>
                 </td>
               </tr>
@@ -157,15 +161,15 @@ const Cart = () => {
       </div>
       <div className={styles.right}>
         <div className={styles.wrapper}>
-          <h2 className={styles.title}>CART TOTAL</h2>
+          <h2 className={styles.title}>TOTAL COS</h2>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Subtotal:</b>${cart.total}
+            <b className={styles.totalTextTitle}>Subtotal:</b> {cart.total} Lei
           </div>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Discount:</b>$0.00
+            <b className={styles.totalTextTitle}>Discount:</b> 0.00 Lei
           </div>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Total:</b>${cart.total}
+            <b className={styles.totalTextTitle}>Total:</b> {cart.total} Lei
           </div>
           {open ? (
             <div className={styles.paymentMethods}>
@@ -173,7 +177,7 @@ const Cart = () => {
                 className={styles.payButton}
                 onClick={() => setCash(true)}
               >
-                CASH ON DELIVERY
+                PLATA CASH LA LIVRARE
               </button>
               <PayPalScriptProvider
                 options={{
@@ -189,7 +193,7 @@ const Cart = () => {
             </div>
           ) : (
             <button onClick={() => setOpen(true)} className={styles.button}>
-              CHECKOUT NOW!
+              PLATESTE ACUM!
             </button>
           )}
         </div>

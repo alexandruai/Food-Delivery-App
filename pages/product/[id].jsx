@@ -17,15 +17,20 @@ const Product = ({ pizza }) => {
     setPrice(price + number);
   };
 
-  const handleSize = (sizeIndex) => {
-    const difference = pizza.prices[sizeIndex] - pizza.prices[size];
-    setSize(sizeIndex);
-    changePrice(difference);
+  const handleSizeChange = (e, sizeIndex) => {
+    const checked = e.target.checked;
+    if (checked) {
+      const difference = pizza.prices[sizeIndex] - pizza.prices[size];
+      setSize(sizeIndex);
+      changePrice(difference);
+    } else {
+      setSize(0); // Revert to default size if unchecked
+      changePrice(pizza.prices[0] - price); // Adjust price to initial price
+    }
   };
 
   const handleChange = (e, option) => {
     const checked = e.target.checked;
-
     if (checked) {
       changePrice(option.price);
       setExtras((prev) => [...prev, option]);
@@ -36,7 +41,7 @@ const Product = ({ pizza }) => {
   };
 
   const handleClick = () => {
-    dispatch(addProduct({...pizza, extras, price, quantity}));
+    dispatch(addProduct({ ...pizza, extras, price, quantity }));
   };
 
   return (
@@ -48,37 +53,67 @@ const Product = ({ pizza }) => {
       </div>
       <div className={styles.right}>
         <h1 className={styles.title}>{pizza.title}</h1>
-        <span className={styles.price}>${price}</span>
+        <span className={styles.price}>{price} Lei</span>
         <p className={styles.desc}>{pizza.desc}</p>
-        <h3 className={styles.choose}>Choose the size</h3>
-        <div className={styles.sizes}>
-          <div className={styles.size} onClick={() => handleSize(0)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Small</span>
-          </div>
-          <div className={styles.size} onClick={() => handleSize(1)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Medium</span>
-          </div>
-          <div className={styles.size} onClick={() => handleSize(2)}>
-            <Image src="/img/size.png" layout="fill" alt="" />
-            <span className={styles.number}>Large</span>
-          </div>
-        </div>
-        <h3 className={styles.choose}>Choose additional ingredients</h3>
-        <div className={styles.ingredients}>
-          {pizza.extraOptions.map((option) => (
-            <div className={styles.option} key={option._id}>
+        {(pizza.title.toLowerCase().includes("pizza") || pizza.title.toLowerCase().includes("meniu")) && (
+          <><h3 className={styles.choose}>Alege Marimea</h3><div className={styles.sizes}>
+            <div className={styles.size}>
               <input
                 type="checkbox"
-                id={option.text}
-                name={option.text}
+                id="sizeSmall"
+                name="sizeSmall"
                 className={styles.checkbox}
-                onChange={(e) => handleChange(e, option)}
-              />
-              <label htmlFor="double">{option.text}</label>
+                onChange={(e) => handleSizeChange(e, 0)}
+                checked={size === 0} />
+              <label htmlFor="sizeSmall">
+                <span className={styles.number}>Mic</span>
+              </label>
             </div>
-          ))}
+            <div className={styles.size}>
+              <input
+                type="checkbox"
+                id="sizeMedium"
+                name="sizeMedium"
+                className={styles.checkbox}
+                onChange={(e) => handleSizeChange(e, 1)}
+                checked={size === 1} />
+              <label htmlFor="sizeMedium">
+                <span className={styles.number}>Mediu</span>
+              </label>
+            </div>
+            <div className={styles.size}>
+              <input
+                type="checkbox"
+                id="sizeLarge"
+                name="sizeLarge"
+                className={styles.checkbox}
+                onChange={(e) => handleSizeChange(e, 2)}
+                checked={size === 2} />
+              <label htmlFor="sizeLarge">
+                <span className={styles.number}>Mare</span>
+              </label>
+            </div>
+          </div></>
+        )}
+
+        <h3 className={styles.choose}>Adauga ingrediente extra</h3>
+        <div className={styles.ingredients}>
+          {pizza.extraOptions.length > 0 ? (
+            pizza.extraOptions.map((option) => (
+              <div className={styles.option} key={option._id}>
+                <input
+                  type="checkbox"
+                  id={option.text}
+                  name={option.text}
+                  className={styles.checkbox}
+                  onChange={(e) => handleChange(e, option)}
+                />
+                <label htmlFor="double">{option.text}</label>
+              </div>
+            ))
+          ) : (
+            <p>Acest produs nu are extra toppinguri disponibile</p>
+          )}
         </div>
         <div className={styles.add}>
           <input
@@ -88,7 +123,7 @@ const Product = ({ pizza }) => {
             className={styles.quantity}
           />
           <button className={styles.button} onClick={handleClick}>
-            Add to Cart
+            Adauga in Cos
           </button>
         </div>
       </div>
@@ -97,9 +132,7 @@ const Product = ({ pizza }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const res = await axios.get(
-    `http://localhost:3000/api/products/${params.id}`
-  );
+  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`);
   return {
     props: {
       pizza: res.data,

@@ -11,7 +11,7 @@ const Index = ({ orders, products }) => {
   const [close, setClose] = useState(true);
   const [pizzaList, setPizzaList] = useState(products);
   const [orderList, setOrderList] = useState(orders);
-  const status = ["preparing", "on the way", "delivered"];
+  const status = ["preparare", "pe drum", "livrat"];
 
   const handleEdit = async (id) => {
     router.push(`/admin/editProduct/${id}`);
@@ -52,15 +52,15 @@ const Index = ({ orders, products }) => {
       {!close && <Add setClose={setClose} />}
     <div className={styles.container}>
       <div className={styles.item}>
-        <h1 className={styles.title}>Products</h1>
+        <h1 className={styles.title}>Produse</h1>
         <table className={styles.table}>
           <tbody>
             <tr className={styles.trTitle}>
-              <th>Image</th>
+              <th>Poza</th>
               <th>Id</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Action</th>
+              <th>Titlu Produs</th>
+              <th>Pret</th>
+              <th>Optiuni</th>
             </tr>
           </tbody>
           {pizzaList.map((product) => (
@@ -77,13 +77,13 @@ const Index = ({ orders, products }) => {
                 </td>
                 <td>{product._id.slice(0, 5)}...</td>
                 <td>{product.title}</td>
-                <td>${product.prices[0]}</td>
+                <td>{product.prices[0]} Lei</td>
                 <td>
                   <button
                     className={styles.button}
                     onClick={() => handleDelete(product._id)}
                   >
-                    Delete
+                    Sterge
                   </button>
                 </td>
               </tr>
@@ -92,16 +92,16 @@ const Index = ({ orders, products }) => {
         </table>
       </div>
       <div className={styles.item}>
-        <h1 className={styles.title}>Orders</h1>
+        <h1 className={styles.title}>Comenzi</h1>
         <table className={styles.table}>
           <tbody>
             <tr className={styles.trTitle}>
               <th>Id</th>
-              <th>Customer</th>
+              <th>Client</th>
               <th>Total</th>
-              <th>Payment</th>
+              <th>Plata</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Optiuni</th>
             </tr>
           </tbody>
           {orderList.map((order) => (
@@ -109,14 +109,14 @@ const Index = ({ orders, products }) => {
               <tr className={styles.trTitle}>
                 <td>{order._id.slice(0, 5)}...</td>
                 <td>{order.customer}</td>
-                <td>${order.total}</td>
+                <td>{order.total} Lei</td>
                 <td>
-                  {order.method === 0 ? <span>cash</span> : <span>paid</span>}
+                  {order.method === 0 ? <span>cash</span> : <span>platita</span>}
                 </td>
                 <td>{status[order.status]}</td>
                 <td>
-                  <button onClick={() => handleStatus(order._id)}>
-                    Next Stage
+                  <button className={styles.button} onClick={() => handleStatus(order._id)}>
+                    Updateaza Status Comanda
                   </button>
                 </td>
               </tr>

@@ -5,15 +5,15 @@ const Reviews = () => {
   const [reviews] = useState([
     {
       customerName: 'John Doe',
-      comment: 'Great service! The food arrived hot and delicious. Will definitely order again.'
+      comment: 'Serviciu excelent! Mâncarea a sosit fierbinte și delicioasă. Cu siguranță voi comanda din nou.'
     },
     {
       customerName: 'Jane Smith',
-      comment: 'Good variety of options. Delivery was quick and the food tasted fresh.'
+      comment: 'O varietate bună de opțiuni. Livrarea a fost rapidă și mâncarea a avut un gust proaspăt.'
     },
     {
       customerName: 'Sam Brown',
-      comment: 'Absolutely delicious! Loved every bite. Highly recommend.'
+      comment: 'Absolut delicios! Mi-a plăcut fiecare mușcătură. Recomand cu căldură.'
     }
   ]);
 
@@ -21,18 +21,23 @@ const Reviews = () => {
     <div>
       <Head>
         <title>Reviews - Food Delivery App</title>
-        <meta name="description" content="Check out the reviews from our happy customers." />
+        <meta name="description" content="Review-uri de la clientii multumiti" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1>Customer Reviews</h1>
+        <h1>Reviewuri de la clientii nostri</h1>
+        <br />
         <ul>
           {reviews.map((review, index) => (
             <li key={index}>
-              <strong>{review.customerName}</strong> - {review.rating} stars<br />
-              {review.comment}
+              <strong>{review.customerName}</strong>
+              <p> 
+                {review.comment}
+              </p>
+              <br />
             </li>
+            
           ))}
         </ul>
       </main>
