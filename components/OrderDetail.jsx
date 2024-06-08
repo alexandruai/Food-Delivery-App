@@ -5,14 +5,26 @@ import styles from "../styles/OrderDetail.module.css";
 
 const OrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
+  const [phone, setPhoneNumber] = useState(""); 
   const [address, setAddress] = useState("");
+  const [error, setError] = useState("");
 
   const handleClick = () => {
+    if (!customer || !address || !phone) {
+      setError("Nu ai introdus toate datele!");
+      return;
+    }
+
     if (total <= 50) {
       total += 5;  // Adăugăm 5 lei la total pentru livrare
     }
-    createOrder({ customer, address, total, method: 0 });
-    setClose(true);
+    createOrder({ 
+        customer,
+        phone,
+        address,
+        total,
+        method: 0 
+      });
   };
 
   return (
@@ -23,6 +35,10 @@ const OrderDetail = ({ total, createOrder }) => {
         ) : (
           <h1 className={styles.title}>Livrare gratuită</h1>
         )}
+        <br />
+        <div className={styles.error} style={{ color: "red" }}>
+          {error && <p>{error}</p>}
+        </div>
         <div className={styles.item}>
           <label className={styles.label}>Nume Prenume</label>
           <input
@@ -38,6 +54,7 @@ const OrderDetail = ({ total, createOrder }) => {
             type="text"
             placeholder="+40 770 777 777"
             className={styles.input}
+            onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
         <div className={styles.item}>
@@ -52,7 +69,7 @@ const OrderDetail = ({ total, createOrder }) => {
         </div>
         <br/>
         <button className={styles.button} onClick={handleClick}>
-          Comanda
+          Plaseaza Comanda
         </button>
         <p>
           <br />

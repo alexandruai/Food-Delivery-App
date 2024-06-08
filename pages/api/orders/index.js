@@ -16,10 +16,13 @@ const handler = async (req, res) => {
   }
   if (method === "POST") {
     try {
+      console.log("Req ", req)
+      console.log("Order ", req.body)
       const order = await Order.create(req.body);
       res.status(201).json(order);
     } catch (err) {
       res.status(500).json(err);
+      console.log("Error ", err.message)
     }
   }
 };

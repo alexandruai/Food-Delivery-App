@@ -82,6 +82,7 @@ const Cart = () => {
               const shipping = details.purchase_units[0].shipping;
               createOrder({
                 customer: shipping.name.full_name,
+                phone: "077777777",
                 address: shipping.address.address_line_1,
                 total: cart.total,
                 method: 1,
@@ -165,9 +166,9 @@ const Cart = () => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Subtotal:</b> {cart.total} Lei
           </div>
-          <div className={styles.totalText}>
+          {/* <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Discount:</b> 0.00 Lei
-          </div>
+          </div> */}
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b> {cart.total} Lei
           </div>

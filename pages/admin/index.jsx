@@ -101,6 +101,7 @@ const Index = ({ orders, products }) => {
               <th>Total</th>
               <th>Plata</th>
               <th>Status</th>
+              <th>Contact</th>
               <th>Optiuni</th>
             </tr>
           </tbody>
@@ -114,9 +115,10 @@ const Index = ({ orders, products }) => {
                   {order.method === 0 ? <span>cash</span> : <span>platita</span>}
                 </td>
                 <td>{status[order.status]}</td>
+                <td>{order.phone}</td>
                 <td>
                   <button className={styles.button} onClick={() => handleStatus(order._id)}>
-                    Updateaza Status Comanda
+                    Updateaza Status
                   </button>
                 </td>
               </tr>
