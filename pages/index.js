@@ -9,8 +9,8 @@ export default function Home({ pizzaList, admin }) {
   return (
     <><div className={styles.container}>
       <Head>
-        <title>Pizza Restaurant in Bucharest</title>
-        <meta name="description" content="Best pizza shop in town" />
+        <title>Pizza Restaurant din Bucuresti</title>
+        <meta name="description" content="Ceea mai buna pizzerie din oras" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Featured />

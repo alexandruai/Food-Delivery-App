@@ -41,12 +41,26 @@ const Product = ({ pizza }) => {
     }
   };
 
+  const handleQuantityChange = (e) => {
+    const newQuantity = parseInt(e.target.value);
+
+    if (newQuantity <= 0) {
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+        setQuantity(1); // Reseteaza cantitatea la 1
+      }, 7000); // Afiseaza mesaj pentru 7 secunde
+    } else {
+      setQuantity(newQuantity);
+    }
+  };
+
   const handleClick = () => {
     dispatch(addProduct({ ...pizza, extras, price, quantity }));
-    setShowMessage(true); // Show message on button click
+    setShowMessage(true);
     setTimeout(() => {
-      setShowMessage(false); // Hide message after 7 seconds
-    }, 7000); // 7 seconds in milliseconds
+      setShowMessage(false);
+    }, 7000);
   };
 
   return (
@@ -128,9 +142,9 @@ const Product = ({ pizza }) => {
         </div>
         <div className={styles.add}>
           <input
-            onChange={(e) => setQuantity(e.target.value)}
             type="number"
-            defaultValue={1}
+            value={quantity}
+            onChange={handleQuantityChange}
             className={styles.quantity}
           />
           <button className={styles.button} onClick={handleClick}>
@@ -138,7 +152,7 @@ const Product = ({ pizza }) => {
           </button>
         </div>
         {showMessage && (
-          <p style={{ marginTop: '10px', color: 'green' }}>Produsul a fost adaugat</p>
+          <p style={{ marginTop: '10px', color: 'red' }}>Cantitatea nu poate fi 0</p>
         )}
       </div>
     </div>
@@ -153,6 +167,5 @@ export const getServerSideProps = async ({ params }) => {
     },
   };
 };
-
 
 export default Product;

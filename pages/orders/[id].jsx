@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styles from "../../styles/Order.module.css";
 import Image from "next/image";
 import axios from "axios";
@@ -10,31 +11,42 @@ const Order = ({ order }) => {
     if (index - status === 1) return styles.inProgress;
     if (index - status > 1) return styles.undone;
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.reload();
+    }, 15000); // Reload after 15 seconds
+
+    return () => clearTimeout(timer); // Cleanup function to clear timeout
+  }, []); // Empty dependency array ensures this effect runs only once
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>
         <div className={styles.row}>
           <table className={styles.table}>
-            <tr className={styles.trTitle}>
-              <th>ID Comanda</th>
-              <th>Client</th>
-              <th>Adresa</th>
-              <th>Total</th>
-            </tr>
-            <tr className={styles.tr}>
-              <td>
-                <span className={styles.id}>{order._id}</span>
-              </td>
-              <td>
-                <span className={styles.name}>{order.customer}</span>
-              </td>
-              <td>
-                <span className={styles.address}>{order.address}</span>
-              </td>
-              <td>
-                <span className={styles.total}> {order.total} Lei</span>
-              </td>
-            </tr>
+            <tbody>
+              <tr className={styles.trTitle}>
+                <th>ID Comanda</th>
+                <th>Client</th>
+                <th>Adresa</th>
+                <th>Total</th>
+              </tr>
+              <tr className={styles.tr}>
+                <td className={styles.td}>
+                  <span className={styles.id}>{order._id}</span>
+                </td>
+                <td className={styles.td}>
+                  <span className={styles.name}>{order.customer}</span>
+                </td>
+                <td className={styles.td}>
+                  <span className={styles.address}>{order.address}</span>
+                </td>
+                <td className={styles.td}>
+                  <span className={styles.total}> {order.total} Lei</span>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div className={styles.row}>
@@ -98,9 +110,6 @@ const Order = ({ order }) => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Subtotal:</b> {order.total} Lei
           </div>
-          {/* <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Discount:</b> 0.00 Lei
-          </div> */}
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b> {order.total} Lei
           </div>

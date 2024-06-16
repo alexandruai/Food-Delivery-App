@@ -60,19 +60,19 @@ const Index = ({ orders, products }) => {
             {pizzaList.map((product) => (
               <tbody key={product._id}>
                 <tr className={styles.trTitle}>
-                  <td>
+                  <td className={styles.td}>
                     <Image
                       src={product.img}
-                      width={50}
-                      height={50}
+                      width={70}
+                      height={70}
                       objectFit="cover"
                       alt=""
                     />
                   </td>
-                  <td>{product._id.slice(0, 5)}...</td>
-                  <td>{product.title}</td>
-                  <td>{product.prices[0]} Lei</td>
-                  <td>
+                  <td className={styles.td}>{product._id}</td>
+                  <td className={styles.td}>{product.title}</td>
+                  <td className={styles.td}>{product.prices[0]} Lei</td>
+                  <td className={styles.td}>
                     <button
                       className={styles.button}
                       onClick={() => handleDelete(product._id)}

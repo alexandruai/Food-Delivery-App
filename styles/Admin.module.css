@@ -13,6 +13,13 @@
     text-align: left;
   }
 
+  .td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
   .buttonNav {
     padding: 10px;
     margin: 20px;
