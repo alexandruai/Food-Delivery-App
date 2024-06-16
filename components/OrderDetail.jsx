@@ -44,6 +44,7 @@ const OrderDetail = ({ total, createOrder }) => {
           <input
             placeholder="John Doe"
             type="text"
+            maxLength={30}
             className={styles.input}
             onChange={(e) => setCustomer(e.target.value)}
           />
@@ -53,6 +54,7 @@ const OrderDetail = ({ total, createOrder }) => {
           <input
             type="text"
             placeholder="+40 770 777 777"
+            maxLength={10}
             className={styles.input}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
@@ -63,6 +65,7 @@ const OrderDetail = ({ total, createOrder }) => {
             rows={5}
             placeholder="Strada Sperantei 777"
             type="text"
+            maxLength={50}
             className={styles.textarea}
             onChange={(e) => setAddress(e.target.value)}
           />

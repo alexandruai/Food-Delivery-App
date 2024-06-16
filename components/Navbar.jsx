@@ -9,8 +9,8 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.item}>
-        <div className={styles.callButton}>
-          <Image src="/img/telephone.png" alt="" width="32" height="32" />
+        <div className={styles.listItem}>
+          <Image src="/img/logo.png" alt="" width="160px" height="69px" />
         </div>
         <div className={styles.texts}>
           <div className={styles.text}>COMANDA ACUM</div>
@@ -24,26 +24,19 @@ const Navbar = () => {
               <a>Acasa</a>
             </Link>
           </li>
+
           <li className={styles.listItem}>
             <Link href="/products" passHref>
               <a>Meniu</a>
             </Link>
           </li>
-          <li className={styles.listItem}>
-            <Link href="/" passHref>
-              <Image src="/img/logo.png" alt="" width="160px" height="69px" />
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/reviews" passHref>
-              <a>Reviews</a>
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/contact" passHref>
-              <a>Contact</a>
-            </Link>
-          </li>
+
+            <li className={styles.listItem}>
+              <Link href="/reviews" passHref>
+                <a>Recenzii</a>
+              </Link>
+            </li>
+
         </ul>
       </div>
       <div className={styles.item}>

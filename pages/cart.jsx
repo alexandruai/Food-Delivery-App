@@ -1,6 +1,6 @@
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import {
   PayPalScriptProvider,
@@ -17,16 +17,20 @@ const Cart = () => {
   const [cart, setCart] = useState(initialCart);
   const [open, setOpen] = useState(false);
   const [cash, setCash] = useState(false);
-  const amount = cart.total;
   const currency = "USD";
   const style = { layout: "vertical" };
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCart(initialCart);
+  }, [initialCart]);
 
   const createOrder = async (data) => {
     try {
       const res = await axios.post("http://localhost:3000/api/orders", data);
       if (res.status === 201) {
-        setCart({ products: [], total: 0 }); // Reset the cart locally
+        dispatch(reset()); // Reset the cart using Redux action
         router.push(`/orders/${res.data._id}`);
       }
     } catch (err) {
@@ -35,9 +39,21 @@ const Cart = () => {
   };
 
   const handleDelete = (productId) => {
-    const newProducts = cart.products.filter(product => product._id !== productId);
+    const newProducts = cart.products.filter((product) => product._id !== productId);
     const newTotal = newProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
     setCart({ products: newProducts, total: newTotal });
+  };
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    const updatedProducts = cart.products.map((product) => {
+      if (product._id === productId) {
+        return { ...product, quantity: newQuantity };
+      }
+      return product;
+    });
+
+    const newTotal = updatedProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
+    setCart({ products: updatedProducts, total: newTotal });
   };
 
   const ButtonWrapper = ({ currency, showSpinner }) => {
@@ -59,7 +75,7 @@ const Cart = () => {
         <PayPalButtons
           style={style}
           disabled={false}
-          forceReRender={[amount, currency, style]}
+          forceReRender={[cart.total, currency, style]}
           fundingSource={undefined}
           createOrder={(data, actions) => {
             return actions.order
@@ -68,7 +84,7 @@ const Cart = () => {
                   {
                     amount: {
                       currency_code: currency,
-                      value: amount,
+                      value: cart.total,
                     },
                   },
                 ],
@@ -98,7 +114,7 @@ const Cart = () => {
     <div className={styles.container}>
       <div className={styles.left}>
         <table className={styles.table}>
-          <tbody>
+          <thead>
             <tr className={styles.trTitle}>
               <th>Produs</th>
               <th>Nume Produs</th>
@@ -108,7 +124,7 @@ const Cart = () => {
               <th>Total</th>
               <th />
             </tr>
-          </tbody>
+          </thead>
           <tbody>
             {cart.products.map((product) => (
               <tr className={styles.tr} key={product._id}>
@@ -140,7 +156,26 @@ const Cart = () => {
                   <span className={styles.price}>{product.price} Lei</span>
                 </td>
                 <td>
-                  <span className={styles.quantity}>{product.quantity}</span>
+                  <div className={styles.quantityControl}>
+                    <button
+                      className={styles.quantityButton}
+                      onClick={() =>
+                        handleQuantityChange(product._id, product.quantity - 1)
+                      }
+                      disabled={product.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <span className={styles.quantity}>{product.quantity}</span>
+                    <button
+                      className={styles.quantityButton}
+                      onClick={() =>
+                        handleQuantityChange(product._id, product.quantity + 1)
+                      }
+                    >
+                      +
+                    </button>
+                  </div>
                 </td>
                 <td>
                   <span className={styles.total}>

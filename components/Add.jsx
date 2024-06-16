@@ -23,8 +23,24 @@ const Add = ({ setClose }) => {
   };
 
   const handleExtra = (e) => {
+    if (!extra.text || !extra.price) {
+      setError("Toppingul sau prețul nu poate fi gol!");
+      return;
+    }
+    const duplicate = extraOptions.some(option => option.text.toLowerCase() === extra.text.toLowerCase());
+    if (duplicate) {
+      setError("Topingul este deja adaugat! Adaugati alt topping!");
+      return;
+    }
     setExtraOptions((prev) => [...prev, extra]);
     setExtra({ text: "", price: "" });
+    setError("");
+  };
+
+  const handleDeleteExtra = (index) => {
+    const newExtras = [...extraOptions];
+    newExtras.splice(index, 1);
+    setExtraOptions(newExtras);
   };
 
   const handleCreate = async () => {
@@ -34,10 +50,10 @@ const Add = ({ setClose }) => {
         return;
       }
     } else {
-        if (!prices[0] || !title || !desc || !file) {
-          setError("Nu ai introdus toate datele!");
-          return;
-        }
+      if (!prices[0] || !title || !desc || !file) {
+        setError("Nu ai introdus toate datele!");
+        return;
+      }
     }
 
     const data = new FormData();
@@ -152,7 +168,15 @@ const Add = ({ setClose }) => {
           <div className={styles.extraItems}>
             {extraOptions.map((option, index) => (
               <span key={index} className={styles.extraItem}>
-                {option.text}
+                <hbox> 
+                  {option.text}
+                </hbox>
+                <hbox ><br/> <br/></hbox>
+                <hbox>
+                  <div>
+                    <button className={styles.deleteButton} onClick={() => handleDeleteExtra(index)}>Sterge Topping</button>
+                  </div>
+                </hbox>
               </span>
             ))}
           </div>

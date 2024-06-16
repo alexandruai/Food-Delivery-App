@@ -11,6 +11,7 @@ const Product = ({ pizza }) => {
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
+  const [showMessage, setShowMessage] = useState(false); // State for message visibility
   const dispatch = useDispatch();
 
   const changePrice = (number) => {
@@ -42,6 +43,10 @@ const Product = ({ pizza }) => {
 
   const handleClick = () => {
     dispatch(addProduct({ ...pizza, extras, price, quantity }));
+    setShowMessage(true); // Show message on button click
+    setTimeout(() => {
+      setShowMessage(false); // Hide message after 7 seconds
+    }, 7000); // 7 seconds in milliseconds
   };
 
   return (
@@ -56,44 +61,50 @@ const Product = ({ pizza }) => {
         <span className={styles.price}>{price} Lei</span>
         <p className={styles.desc}>{pizza.desc}</p>
         {(pizza.title.toLowerCase().includes("pizza") || pizza.title.toLowerCase().includes("meniu")) && (
-          <><h3 className={styles.choose}>Alege Marimea</h3><div className={styles.sizes}>
-            <div className={styles.size}>
-              <input
-                type="checkbox"
-                id="sizeSmall"
-                name="sizeSmall"
-                className={styles.checkbox}
-                onChange={(e) => handleSizeChange(e, 0)}
-                checked={size === 0} />
-              <label htmlFor="sizeSmall">
-                <span className={styles.number}>Mic</span>
-              </label>
+          <>
+            <h3 className={styles.choose}>Alege Marimea</h3>
+            <div className={styles.sizes}>
+              <div className={styles.size}>
+                <input
+                  type="checkbox"
+                  id="sizeSmall"
+                  name="sizeSmall"
+                  className={styles.checkbox}
+                  onChange={(e) => handleSizeChange(e, 0)}
+                  checked={size === 0}
+                />
+                <label htmlFor="sizeSmall">
+                  <span className={styles.number}>Mic</span>
+                </label>
+              </div>
+              <div className={styles.size}>
+                <input
+                  type="checkbox"
+                  id="sizeMedium"
+                  name="sizeMedium"
+                  className={styles.checkbox}
+                  onChange={(e) => handleSizeChange(e, 1)}
+                  checked={size === 1}
+                />
+                <label htmlFor="sizeMedium">
+                  <span className={styles.number}>Mediu</span>
+                </label>
+              </div>
+              <div className={styles.size}>
+                <input
+                  type="checkbox"
+                  id="sizeLarge"
+                  name="sizeLarge"
+                  className={styles.checkbox}
+                  onChange={(e) => handleSizeChange(e, 2)}
+                  checked={size === 2}
+                />
+                <label htmlFor="sizeLarge">
+                  <span className={styles.number}>Mare</span>
+                </label>
+              </div>
             </div>
-            <div className={styles.size}>
-              <input
-                type="checkbox"
-                id="sizeMedium"
-                name="sizeMedium"
-                className={styles.checkbox}
-                onChange={(e) => handleSizeChange(e, 1)}
-                checked={size === 1} />
-              <label htmlFor="sizeMedium">
-                <span className={styles.number}>Mediu</span>
-              </label>
-            </div>
-            <div className={styles.size}>
-              <input
-                type="checkbox"
-                id="sizeLarge"
-                name="sizeLarge"
-                className={styles.checkbox}
-                onChange={(e) => handleSizeChange(e, 2)}
-                checked={size === 2} />
-              <label htmlFor="sizeLarge">
-                <span className={styles.number}>Mare</span>
-              </label>
-            </div>
-          </div></>
+          </>
         )}
 
         <h3 className={styles.choose}>Adauga ingrediente extra</h3>
@@ -108,7 +119,7 @@ const Product = ({ pizza }) => {
                   className={styles.checkbox}
                   onChange={(e) => handleChange(e, option)}
                 />
-                <label htmlFor="double">{option.text}</label>
+                <label htmlFor={option.text}>{option.text}</label>
               </div>
             ))
           ) : (
@@ -126,6 +137,9 @@ const Product = ({ pizza }) => {
             Adauga in Cos
           </button>
         </div>
+        {showMessage && (
+          <p style={{ marginTop: '10px', color: 'green' }}>Produsul a fost adaugat</p>
+        )}
       </div>
     </div>
   );
@@ -139,5 +153,6 @@ export const getServerSideProps = async ({ params }) => {
     },
   };
 };
+
 
 export default Product;
