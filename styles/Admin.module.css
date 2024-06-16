@@ -43,3 +43,9 @@
   .button:last-child {
     background-color: crimson;
   }
+
+  .disabledButton {
+    background-color: #ccc;
+    cursor: not-allowed;
+    color: grey;
+  }

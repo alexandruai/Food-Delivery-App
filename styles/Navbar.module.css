@@ -78,9 +78,10 @@
 }
 
 .listItem {
-  margin-right: 15px; /* Add margin to the right of each list item */
+  margin-right: 55px; /* Add margin to the right of each list item */
   font-weight: 500;
   cursor: pointer;
+  align-items: left;
 }
 
 .cart {
