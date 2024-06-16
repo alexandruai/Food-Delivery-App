@@ -9,7 +9,7 @@ import {
 } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { reset } from "../redux/cartSlice";
+import { reset, removeProduct } from "../redux/cartSlice";
 import OrderDetail from "../components/OrderDetail";
 
 const Cart = () => {
@@ -28,20 +28,19 @@ const Cart = () => {
 
   const createOrder = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/orders", data);
+      const res = await axios.post("http://localhost:3000/api/orders", {
+        ...data,
+        products: cart.products,
+      });
       if (res.status === 201) {
-        dispatch(reset()); // Reset the cart using Redux action
-        router.push(`/orders/${res.data._id}`);
+        dispatch(reset());
       }
     } catch (err) {
       console.log(err);
     }
   };
-
   const handleDelete = (productId) => {
-    const newProducts = cart.products.filter((product) => product._id !== productId);
-    const newTotal = newProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
-    setCart({ products: newProducts, total: newTotal });
+    dispatch(removeProduct(productId));
   };
 
   const handleQuantityChange = (productId, newQuantity) => {
@@ -52,7 +51,10 @@ const Cart = () => {
       return product;
     });
 
-    const newTotal = updatedProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
+    const newTotal = updatedProducts.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
     setCart({ products: updatedProducts, total: newTotal });
   };
 
@@ -125,6 +127,7 @@ const Cart = () => {
               <th />
             </tr>
           </thead>
+          <br />
           <tbody>
             {cart.products.map((product) => (
               <tr className={styles.tr} key={product._id}>
@@ -201,9 +204,6 @@ const Cart = () => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Subtotal:</b> {cart.total} Lei
           </div>
-          {/* <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Discount:</b> 0.00 Lei
-          </div> */}
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b> {cart.total} Lei
           </div>

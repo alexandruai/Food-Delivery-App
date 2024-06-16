@@ -1,5 +1,6 @@
 import dbConnect from "../../../util/mongo";
 import Order from "../../../models/Order";
+import Product from "../../../models/Product";
 
 const handler = async (req, res) => {
   const { method } = req;
@@ -8,7 +9,7 @@ const handler = async (req, res) => {
 
   if (method === "GET") {
     try {
-      const orders = await Order.find();
+      const orders = await Order.find().populate("products");
       res.status(200).json(orders);
     } catch (err) {
       res.status(500).json(err);
@@ -16,13 +17,23 @@ const handler = async (req, res) => {
   }
   if (method === "POST") {
     try {
-      console.log("Req ", req)
-      console.log("Order ", req.body)
-      const order = await Order.create(req.body);
+      const { customer, phone, address, total, method, products } = req.body;
+
+     // const productIds = products.map((productId) => mongoose.Types.ObjectId(productId));
+
+      const order = await Order.create({
+        customer,
+        phone,
+        address,
+        total,
+        method,
+        products: products,
+      });
+
       res.status(201).json(order);
     } catch (err) {
+      console.error("Error creating order:", err.message);
       res.status(500).json(err);
-      console.log("Error ", err.message)
     }
   }
 };

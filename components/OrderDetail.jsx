@@ -5,7 +5,7 @@ import styles from "../styles/OrderDetail.module.css";
 
 const OrderDetail = ({ total, createOrder }) => {
   const [customer, setCustomer] = useState("");
-  const [phone, setPhoneNumber] = useState(""); 
+  const [phone, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
 
@@ -18,13 +18,14 @@ const OrderDetail = ({ total, createOrder }) => {
     if (total <= 50) {
       total += 5;  // Adăugăm 5 lei la total pentru livrare
     }
-    createOrder({ 
-        customer,
-        phone,
-        address,
-        total,
-        method: 0 
-      });
+    createOrder({
+      customer,
+      phone,
+      address,
+      total,
+      method: 0
+    });
+    window.location.reload();
   };
 
   return (
@@ -70,14 +71,14 @@ const OrderDetail = ({ total, createOrder }) => {
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
-        <br/>
+        <br />
         <button className={styles.button} onClick={handleClick}>
           Plaseaza Comanda
         </button>
         <p>
           <br />
           <Link href="/products" passHref>
-              Ma Mai Gandesc
+            Ma Mai Gandesc
           </Link>
         </p>
       </div>

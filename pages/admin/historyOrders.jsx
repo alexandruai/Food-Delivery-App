@@ -1,15 +1,29 @@
 import axios from "axios";
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../../styles/Admin.module.css";
 
-const HistoryOrders = ({ orders }) => {
+const HistoryOrders = ({ orders, products }) => {
     const router = useRouter();
     const [orderList, setOrderList] = useState(orders);
+    const [productMap, setProductMap] = useState({});
+
+    useEffect(() => {
+        const map = {};
+        orderList.forEach(order => {
+            order.products.forEach(product => {
+                if (!map[product._id]) {
+                    map[product._id] = product.title;
+                }
+            });
+        });
+        setProductMap(map);
+    }, [orderList]);
+
     const statusLabels = ["Platita", "Preparare", "Pe Drum", "Livrat"];
 
     const handleBack = () => {
-        router.push('/admin'); // Redirect back to admin page
+        router.push('/admin'); // Inapoi la /admin
     };
 
     const handleStatus = async (id) => {
@@ -58,19 +72,20 @@ const HistoryOrders = ({ orders }) => {
             <br />
             <div className={styles.container}>
                 <div className={styles.item}>
-                    <h1 className={styles.title}>Istoric Comenzi</h1>
+                    <h1 className={styles.title}>IStoric Comenzi</h1>
                     <br />
                     <table className={styles.table}>
                         <thead>
                             <tr className={styles.trTitle}>
                                 <th>Id</th>
                                 <th>Client</th>
+                                <th>Produse</th>
                                 <th>Total</th>
                                 <th>Metoda Plata</th>
                                 <th>Status</th>
                                 <th>Contact</th>
                                 <th>Updateaza Comanda</th>
-                                <th>Sterge Comanda</th>
+                                <th>Sterge Comandar</th>
                             </tr>
                         </thead>
                         <br />
@@ -79,6 +94,14 @@ const HistoryOrders = ({ orders }) => {
                                 <tr key={order._id} className={styles.tr}>
                                     <td className={styles.td}>{order._id}</td>
                                     <td className={styles.td}>{order.customer}</td>
+                                    <td className={styles.td}>
+                                        {order.products.map((item, index) => (
+                                            <span key={item._id}>
+                                                {productMap[item._id]}
+                                                {index !== order.products.length - 1 && ", "}
+                                            </span>
+                                        ))}
+                                    </td>
                                     <td className={styles.td}>{order.total} Lei</td>
                                     <td className={styles.td}>{order.method === 0 ? <span>cash</span> : <span>paid</span>}</td>
                                     <td className={styles.td}>{getStatusLabel(order.status)}</td>
@@ -89,7 +112,7 @@ const HistoryOrders = ({ orders }) => {
                                             disabled={order.status >= 4}
                                             onClick={() => handleStatus(order._id)}
                                         >
-                                            Update Status
+                                            Updateaza Status
                                         </button>
                                     </td>
                                     <td className={styles.td}>
@@ -122,13 +145,25 @@ export const getServerSideProps = async (ctx) => {
         };
     }
 
-    const orderRes = await axios.get("http://localhost:3000/api/orders");
+    try {
+        const orderRes = await axios.get("http://localhost:3000/api/orders");
+        const productRes = await axios.get("http://localhost:3000/api/products");
 
-    return {
-        props: {
-            orders: orderRes.data,
-        },
-    };
+        return {
+            props: {
+                orders: orderRes.data,
+                products: productRes.data,
+            },
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            props: {
+                orders: [],
+                products: [],
+            },
+        };
+    }
 };
 
 export default HistoryOrders;

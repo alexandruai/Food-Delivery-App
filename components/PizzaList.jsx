@@ -37,7 +37,8 @@ const PizzaList = ({ pizzaList }) => {
     <div className={styles.container}>
       <br />
       <h1 className={styles.title}>CEA MAI BUNA MANCARE DIN ORAS</h1>
-
+      <br />
+      <br />
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>

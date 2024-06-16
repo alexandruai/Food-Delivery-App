@@ -29,6 +29,13 @@ const OrderSchema = new mongoose.Schema(
       type: Number,
       required:true
     },
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product", // Assuming you have a Product model
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );

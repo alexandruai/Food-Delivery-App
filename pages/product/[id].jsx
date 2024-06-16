@@ -11,7 +11,8 @@ const Product = ({ pizza }) => {
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
-  const [showMessage, setShowMessage] = useState(false); // State for message visibility
+  const [showMessage, setShowMessage] = useState(false);
+  const [showError, setShowError] = useState(false);
   const dispatch = useDispatch();
 
   const changePrice = (number) => {
@@ -45,9 +46,9 @@ const Product = ({ pizza }) => {
     const newQuantity = parseInt(e.target.value);
 
     if (newQuantity <= 0) {
-      setShowMessage(true);
+      setShowError(true);
       setTimeout(() => {
-        setShowMessage(false);
+        setShowError(false);
         setQuantity(1); // Reseteaza cantitatea la 1
       }, 7000); // Afiseaza mesaj pentru 7 secunde
     } else {
@@ -152,6 +153,9 @@ const Product = ({ pizza }) => {
           </button>
         </div>
         {showMessage && (
+          <p style={{ marginTop: '10px', color: 'green' }}>Produsul a fost adaugat in cos</p>
+        )}
+        {showError && (
           <p style={{ marginTop: '10px', color: 'red' }}>Cantitatea nu poate fi 0</p>
         )}
       </div>
