@@ -30,7 +30,9 @@ const handler = async (req, res) => {
         products: products,
       });
 
+      console.log("Order ", order)
       res.status(201).json(order);
+     // console.log("Res ", res)
     } catch (err) {
       console.error("Error creating order:", err.message);
       res.status(500).json(err);

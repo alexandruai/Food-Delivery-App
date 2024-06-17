@@ -15,7 +15,7 @@ const Order = ({ order }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       window.location.reload();
-    }, 15000); // Reload after 15 seconds
+    }, 7000); // Reload after 15 seconds
 
     return () => clearTimeout(timer); // Cleanup function to clear timeout
   }, []); // Empty dependency array ensures this effect runs only once

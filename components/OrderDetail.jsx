@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "../styles/OrderDetail.module.css";
 
@@ -8,8 +9,9 @@ const OrderDetail = ({ total, createOrder }) => {
   const [phone, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!customer || !address || !phone) {
       setError("Nu ai introdus toate datele!");
       return;
@@ -18,14 +20,27 @@ const OrderDetail = ({ total, createOrder }) => {
     if (total <= 50) {
       total += 5;  // Adăugăm 5 lei la total pentru livrare
     }
-    createOrder({
+    // createOrder({
+    //   customer,
+    //   phone,
+    //   address,
+    //   total,
+    //   method: 0,
+    // //  products: cart.products
+    // });
+    //window.location.reload();
+
+    const orderId = await createOrder({
       customer,
       phone,
       address,
       total,
-      method: 0
+      method: 0,
     });
-    window.location.reload();
+
+    if (orderId) {
+      router.push(`/orders/${orderId}`);
+    }
   };
 
   return (

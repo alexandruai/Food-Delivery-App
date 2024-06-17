@@ -17,7 +17,7 @@ const Cart = () => {
   const [cart, setCart] = useState(initialCart);
   const [open, setOpen] = useState(false);
   const [cash, setCash] = useState(false);
-  const currency = "USD";
+  const currency = "RON";
   const style = { layout: "vertical" };
   const router = useRouter();
   const dispatch = useDispatch();
@@ -30,12 +30,17 @@ const Cart = () => {
     try {
       const res = await axios.post("http://localhost:3000/api/orders", {
         ...data,
-        products: cart.products,
+        products: cart.products
       });
+      //const res = await axios.post("http://localhost:3000/api/orders", data);
+      console.log("ceva")
       if (res.status === 201) {
         dispatch(reset());
+        return res.data._id;
+      //  router.push(`/orders/${res.data._id}`);
       }
     } catch (err) {
+      console.log("Eroare");
       console.log(err);
     }
   };
