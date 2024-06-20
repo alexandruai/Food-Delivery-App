@@ -17,33 +17,49 @@
     text-align: center; /* Center align text */
 }
 
-.tableContainer {
-    max-height: 400px; /* Adjust height as needed */
+/* .tableContainer {
+    max-height: 400px;
     overflow-y: auto;
-    width: 100%; /* Ensure the container takes full width */
+    width: 100%; 
     display: flex;
-    justify-content: center; /* Center align the table */
-}
+    justify-content: center; 
+} */
 
 .table {
-    width: auto; /* Adjust table width to its content */
+    /* width: auto;
     border-collapse: collapse;
-    text-align: center;
+    text-align: center; */
+    width: 100%;
+    border-spacing: 20px;
+    text-align: left;
+    height: auto;
 }
 
-.table th, .table td {
+.td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    text-align: center;
+    text-wrap: wrap;
+    height: auto;
+
+  }
+
+.th {
     border: 1px solid #dddddd;
-    padding: 16px; /* Increase padding to make cells larger */
+    padding: 25px; /* Increase padding to make cells larger */
     text-align: center; /* Center align cell content */
     text-wrap: wrap;
+    background-color: #f2f2f2;
 }
 
-.table th {
+/* .table th {
     background-color: #f2f2f2;
     text-wrap: wrap;
-}
+} */
 
-.table td img {
+.img {
     max-width: 100%; /* Ensure images fit within their cells */
     height: auto; /* Maintain aspect ratio */
     text-align: center;

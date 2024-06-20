@@ -1,6 +1,8 @@
 import axios from "axios";
 import PizzaList from "../components/PizzaList";
-import styles from "../styles/Home.module.css";
+//import styles from "../styles/Home.module.css";
+//import styles from "../styles/Admin.module.css";
+import styles from "../styles/Products.module.css";
 
 export default function Products({ pizzaList, admin }) {
     return (
