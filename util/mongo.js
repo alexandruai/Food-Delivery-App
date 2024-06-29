@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
-const MONGO_URL = process.env.MONGO_URL
+// const MONGO_URL = process.env.MONGO_URL
+const MONGO_URL = "mongodb+srv://andra2699:Andra2699@cluster0.ijkozef.mongodb.net/foodDelivery?retryWrites=true&w=majority&appName=Cluster0"
 
 if (!MONGO_URL) {
   throw new Error(

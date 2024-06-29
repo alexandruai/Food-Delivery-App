@@ -7,6 +7,8 @@ const handler = async (req, res) => {
 
   await dbConnect();
 
+  console.log(`Request Method: ${method}`);
+
   if (method === "GET") {
     try {
       const orders = await Order.find().populate("products");

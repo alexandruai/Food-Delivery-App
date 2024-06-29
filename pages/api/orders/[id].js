@@ -9,6 +9,8 @@ const handler = async (req, res) => {
 
   await dbConnect();
 
+  console.log(`Request Method: ${method}`);
+
   if (method === "GET") {
     try {
       const order = await Order.findById(id);
